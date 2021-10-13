@@ -6,21 +6,24 @@ DECLARE @StartOfMonth [Date]
 SET @StartOfMonth = (SELECT DATEADD(DAY, 1, EOMONTH(@MonthEnd, -1)))
 
  SELECT 
- [FirstName]
+ [CustomerId] 
+,[FirstName]
 ,[LastName]
 ,[Active]
 ,[New]    
 ,[Lost]  
-,[Reclaim] = CASE WHEN Active = 1 AND Lost = 1 THEN 1 ELSE 0 END
+,[Reclaim] = CASE WHEN [Active] = 1 AND [Lost] = 1 THEN 1 ELSE 0 END
 FROM(
 		SELECT 
-		 [FirstName]
+         [CustomerId] 
+		,[FirstName]
 		,[LastName]
 		,[Active] = SUM([Active])
 		,[New]    = SUM([New])
 		,[Lost]   = SUM([Lost])
        FROM( 
-			SELECT DISTINCT [FirstName]
+			SELECT DISTINCT [CustomerId] = C.[CustomerId]
+						   ,[FirstName]
 						   ,[LastName]
 						   ,[Active]   = CASE WHEN S.[TransactionDate] BETWEEN  @StartOfMonth AND @MonthEnd AND S.[SaleAmount] > 0 THEN 1 ELSE 0 END
 						   ,[New]      = CASE WHEN C.[InsertDate]      BETWEEN  @StartOfMonth AND @MonthEnd THEN 1 ELSE 0 END
@@ -33,7 +36,8 @@ FROM(
 			OR     (S.[TransactionDate] < DATEADD(MONTH, -6, GETDATE()))
             )temp
        GROUP BY 
-       [FirstName]
-      ,[LastName]
+       	[CustomerId]
+       ,[FirstName]
+       ,[LastName]
 
     )Reclaim
