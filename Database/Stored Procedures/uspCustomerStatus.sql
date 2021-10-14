@@ -27,7 +27,7 @@ FROM(
 				     ,[LastName]
 				     ,[Active]     = CASE WHEN S.[TransactionDate] BETWEEN  @StartOfMonth AND @MonthEnd AND S.[SaleAmount] > 0 THEN 1 ELSE 0 END
 				     ,[New]        = CASE WHEN C.[InsertDate]      BETWEEN  @StartOfMonth AND @MonthEnd THEN 1 ELSE 0 END
-				     ,[Lost]     = CASE WHEN S.[TransactionDate] < DATEADD(MONTH, -6, @MonthEnd)      THEN 1 ELSE 0 END
+				     ,[Lost]       = CASE WHEN S.[TransactionDate] < DATEADD(MONTH, -6, @MonthEnd)      THEN 1 ELSE 0 END
 			FROM	[dbo].[Customer] C
 			JOIN	[dbo].[Sales] S
 				ON S.[CustomerId] = C.[CustomerId]
