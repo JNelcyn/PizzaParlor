@@ -11,5 +11,5 @@ CREATE TABLE [dbo].[Customer]
     [Email]       [NVARCHAR](50) NULL,
     [InsertDate]  [DATETIME]     NOT NULL,
     [UpdatedDate] [DATETIME]     NULL,
-CONSTRAINT [PK_Customer_CustomerId] PRIMARY KEY CLUSTERED ([CustomerId] ASC),
+CONSTRAINT [PK_Customer_CustomerId] PRIMARY KEY ([CustomerId] ASC),
 );
