@@ -34,6 +34,7 @@ FROM(
 			WHERE  (S.[TransactionDate] BETWEEN  @StartOfMonth AND @MonthEnd AND S.[SaleAmount] > 0)
 			OR     (C.[InsertDate]      BETWEEN  @StartOfMonth AND @MonthEnd)
 			OR     (S.[TransactionDate] < DATEADD(MONTH, -6, @MonthEnd))
+			AND    (S.[TransactionDate] > DATEADD(MONTH, -9, @MonthEnd))
             )Main
      GROUP BY 
        	[CustomerId]
